@@ -153,7 +153,7 @@ export class CanvasPlaneViewer {
     ctx.fillRect(4, 4, 72, 28);
     ctx.fillStyle = '#ddd';
     ctx.font = '12px ui-monospace, monospace';
-    ctx.fillText(`${this.labelX} →`, 8, 16);
+    ctx.fillText(`${this.labelX} ->`, 8, 16);
     ctx.fillText(`${this.labelY} ↑`, 8, 28);
     ctx.restore();
   }
