@@ -25,14 +25,20 @@ export function Controls({
   const frame = timeToFrameIndex(state.t0, meta.fps, meta.frameCount);
 
   return (
-    <div className="controls">
+    <div className="controls" data-testid="controls">
       <div className="controls__row">
-        <button type="button" className="button" onClick={() => viewerStore.togglePlaying()}>
+        <button
+          type="button"
+          className="button"
+          data-testid="play-pause"
+          onClick={() => viewerStore.togglePlaying()}
+        >
           {state.isPlaying ? 'Pausa' : 'Reproducir'}
         </button>
         <label className="controls__check">
           <input
             type="checkbox"
+            data-testid="enhance-temporal"
             checked={state.enhanceTemporal}
             onChange={(event) => viewerStore.setEnhanceTemporal(event.target.checked)}
           />
@@ -41,33 +47,40 @@ export function Controls({
         <label className="controls__check">
           <input
             type="checkbox"
+            data-testid="swap-xt"
             checked={state.swapXtOrientation}
             onChange={(event) => viewerStore.setSwapXtOrientation(event.target.checked)}
           />
           Intercambiar orientación XT
         </label>
         <div className="controls__exports">
-          <button type="button" className="button" onClick={onExportXy}>
+          <button type="button" className="button" data-testid="export-xy" onClick={onExportXy}>
             Exportar XY
           </button>
-          <button type="button" className="button" onClick={onExportXt}>
+          <button type="button" className="button" data-testid="export-xt" onClick={onExportXt}>
             Exportar XT
           </button>
-          <button type="button" className="button" onClick={onExportYt}>
+          <button type="button" className="button" data-testid="export-yt" onClick={onExportYt}>
             Exportar YT
           </button>
-          <button type="button" className="button" onClick={onExportVolume}>
+          <button
+            type="button"
+            className="button"
+            data-testid="export-volume"
+            onClick={onExportVolume}
+          >
             Exportar 3D
           </button>
         </div>
       </div>
 
       <label className="slider">
-        <span>
+        <span data-testid="label-t">
           t = {state.t0.toFixed(3)} s (frame {frame}/{meta.frameCount - 1})
         </span>
         <input
           type="range"
+          data-testid="slider-t"
           min={0}
           max={Math.max(0, meta.durationSec)}
           step={1 / meta.fps}
@@ -78,11 +91,10 @@ export function Controls({
 
       <div className="controls__grid">
         <label className="slider">
-          <span>
-            x0 = {state.x0}
-          </span>
+          <span data-testid="label-x">x0 = {state.x0}</span>
           <input
             type="range"
+            data-testid="slider-x"
             min={0}
             max={Math.max(0, meta.width - 1)}
             step={1}
@@ -91,11 +103,10 @@ export function Controls({
           />
         </label>
         <label className="slider">
-          <span>
-            y0 = {state.y0}
-          </span>
+          <span data-testid="label-y">y0 = {state.y0}</span>
           <input
             type="range"
+            data-testid="slider-y"
             min={0}
             max={Math.max(0, meta.height - 1)}
             step={1}
@@ -104,11 +115,12 @@ export function Controls({
           />
         </label>
         <label className="slider">
-          <span>
+          <span data-testid="label-temporal-scale">
             Escala temporal = {state.temporalScale.toFixed(2)}
           </span>
           <input
             type="range"
+            data-testid="slider-temporal-scale"
             min={0.1}
             max={8}
             step={0.05}
@@ -117,11 +129,12 @@ export function Controls({
           />
         </label>
         <label className="slider">
-          <span>
+          <span data-testid="label-frame-sampling">
             Muestreo de frames (3D) = {state.frameSampling}
           </span>
           <input
             type="range"
+            data-testid="slider-frame-sampling"
             min={32}
             max={512}
             step={1}
@@ -130,11 +143,12 @@ export function Controls({
           />
         </label>
         <label className="slider">
-          <span>
+          <span data-testid="label-slice-samples">
             Muestras temporales (XT/YT) = {state.sliceTimeSamples}
           </span>
           <input
             type="range"
+            data-testid="slider-slice-samples"
             min={32}
             max={512}
             step={1}
@@ -143,11 +157,10 @@ export function Controls({
           />
         </label>
         <label className="slider">
-          <span>
-            Grosor de corte = {state.sliceThickness}
-          </span>
+          <span data-testid="label-thickness">Grosor de corte = {state.sliceThickness}</span>
           <input
             type="range"
+            data-testid="slider-thickness"
             min={1}
             max={21}
             step={2}

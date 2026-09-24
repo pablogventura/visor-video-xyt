@@ -91,8 +91,28 @@ export class CanvasPlaneViewer {
       return null;
     }
     const rect = this.canvas.getBoundingClientRect();
-    const sx = ((event.clientX - rect.left) / rect.width) * this.image.width;
-    const sy = ((event.clientY - rect.top) / rect.height) * this.image.height;
+    const bitmapAspect = this.image.width / Math.max(1, this.image.height);
+    const elementAspect = rect.width / Math.max(1, rect.height);
+    let contentWidth = rect.width;
+    let contentHeight = rect.height;
+    let offsetX = 0;
+    let offsetY = 0;
+    if (elementAspect > bitmapAspect) {
+      contentWidth = rect.height * bitmapAspect;
+      offsetX = (rect.width - contentWidth) / 2;
+    } else if (elementAspect < bitmapAspect) {
+      contentHeight = rect.width / bitmapAspect;
+      offsetY = (rect.height - contentHeight) / 2;
+    }
+
+    const localX = event.clientX - rect.left - offsetX;
+    const localY = event.clientY - rect.top - offsetY;
+    if (localX < 0 || localY < 0 || localX > contentWidth || localY > contentHeight) {
+      return null;
+    }
+
+    const sx = (localX / contentWidth) * this.image.width;
+    const sy = (localY / contentHeight) * this.image.height;
     return {
       px: clamp(sx, 0, this.image.width - 1),
       py: clamp(sy, 0, this.image.height - 1),

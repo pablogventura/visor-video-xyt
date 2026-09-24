@@ -3,6 +3,7 @@ import type { ChangeEvent, DragEvent } from 'react';
 interface DropZoneProps {
   disabled?: boolean;
   onFile: (file: File) => void;
+  testId?: string;
 }
 
 function pickVideoFile(fileList: FileList | null): File | null {
@@ -19,7 +20,7 @@ function pickVideoFile(fileList: FileList | null): File | null {
   return null;
 }
 
-export function DropZone({ disabled, onFile }: DropZoneProps) {
+export function DropZone({ disabled, onFile, testId = 'dropzone' }: DropZoneProps) {
   const onDrop = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     if (disabled) {
@@ -42,6 +43,7 @@ export function DropZone({ disabled, onFile }: DropZoneProps) {
   return (
     <div
       className={`dropzone ${disabled ? 'dropzone--disabled' : ''}`}
+      data-testid={testId}
       onDragOver={(event) => event.preventDefault()}
       onDrop={onDrop}
     >
@@ -49,7 +51,14 @@ export function DropZone({ disabled, onFile }: DropZoneProps) {
       <div className="dropzone__hint">Procesamiento 100% local en el navegador</div>
       <label className="button button--primary">
         Elegir video
-        <input type="file" accept="video/*" hidden disabled={disabled} onChange={onChange} />
+        <input
+          type="file"
+          accept="video/*"
+          hidden
+          disabled={disabled}
+          data-testid={`${testId}-input`}
+          onChange={onChange}
+        />
       </label>
     </div>
   );

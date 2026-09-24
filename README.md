@@ -43,6 +43,20 @@ src/ui/         React layout and controls
 
 Frame access uses `HTMLVideoElement` with serialized seeks and an LRU cache. XT/YT are built from real sampled scanlines/columns (not visual approximations). Volume textures and XT/YT use downscaled frames; XY keeps native resolution.
 
-## GitHub Pages
+## Tests (Playwright)
 
-Production builds use `base: /visor-video-xyt/`. The workflow in `.github/workflows/pages.yml` builds and deploys on pushes to `main`.
+A synthetic fixture video lives at `e2e/fixtures/moving-box.mp4` (ffmpeg `testsrc`, 320x240, 2s, 30fps). Regenerate with:
+
+```bash
+bash scripts/generate-fixture-video.sh
+```
+
+Run the browser suite:
+
+```bash
+npm install
+npx playwright install chromium
+npm test
+```
+
+The suite loads the fixture, asserts real XY/XT/YT pixel signal, linked navigation, playback, sliders, enhance/swap, WebGL volume canvas, and PNG exports.

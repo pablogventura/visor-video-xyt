@@ -1,11 +1,9 @@
 import type { SizeTier, VideoMeta } from './types';
 
-export function estimateFps(durationSec: number, video: HTMLVideoElement): number {
-  // HTMLVideoElement does not expose FPS reliably; use a conservative default.
-  const candidate = Number((video as HTMLVideoElement & { getVideoPlaybackQuality?: () => { totalVideoFrames?: number } }).getVideoPlaybackQuality?.().totalVideoFrames);
-  if (Number.isFinite(candidate) && candidate > 0 && durationSec > 0) {
-    return Math.max(1, Math.min(120, candidate / durationSec));
-  }
+export function estimateFps(_durationSec: number, _video: HTMLVideoElement): number {
+  // getVideoPlaybackQuality().totalVideoFrames is incomplete at metadata time
+  // (often a handful of decoded frames), which yields absurd FPS like 2 for a 2s clip.
+  // HTMLVideoElement does not expose container FPS reliably; use a stable default.
   return 30;
 }
 

@@ -36,7 +36,7 @@ export function App() {
   };
 
   return (
-    <div className="app">
+    <div className="app" data-testid="app">
       <header className="app__header">
         <div>
           <h1>Visor espacio-temporal XYT</h1>
@@ -53,28 +53,28 @@ export function App() {
       </header>
 
       {!state.meta && (
-        <div className="app__overlay">
-          <DropZone onFile={onFile} />
+        <div className="app__overlay" data-testid="load-overlay">
+          <DropZone onFile={onFile} testId="dropzone-overlay" />
         </div>
       )}
 
       <main className="app__main">
-        <section className="panel panel--volume">
+        <section className="panel panel--volume" data-testid="panel-volume">
           <div className="panel__title">Vista 3D (volumen x-y-t)</div>
-          <div className="volume-host" ref={volumeRef} />
+          <div className="volume-host" ref={volumeRef} data-testid="volume-host" />
         </section>
         <section className="panel-stack">
-          <div className="panel">
+          <div className="panel" data-testid="panel-xy">
             <div className="panel__title">XY - I(x, y, t0)</div>
-            <canvas ref={xyRef} className="plane-canvas" />
+            <canvas ref={xyRef} className="plane-canvas" data-testid="canvas-xy" />
           </div>
-          <div className="panel">
+          <div className="panel" data-testid="panel-xt">
             <div className="panel__title">XT - I(x, y0, t)</div>
-            <canvas ref={xtRef} className="plane-canvas" />
+            <canvas ref={xtRef} className="plane-canvas" data-testid="canvas-xt" />
           </div>
-          <div className="panel">
+          <div className="panel" data-testid="panel-yt">
             <div className="panel__title">YT - I(x0, y, t)</div>
-            <canvas ref={ytRef} className="plane-canvas" />
+            <canvas ref={ytRef} className="plane-canvas" data-testid="canvas-yt" />
           </div>
         </section>
       </main>
@@ -82,7 +82,7 @@ export function App() {
       <footer className="app__footer">
         {state.meta && (
           <div className="app__footer-load">
-            <DropZone onFile={onFile} />
+            <DropZone onFile={onFile} testId="dropzone-footer" />
           </div>
         )}
         <Controls
